@@ -1,0 +1,21 @@
+name: pz4
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pz4-image
+    container_name: pz4-app
+    restart: unless-stopped
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080      
+    ports:
+      - "8019:8080"
+    healthcheck:
+      test: ["CMD","-q", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
